@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic & Beetles | Kids Entertainment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">MagicalEvents</div>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content hidden">
+            <h1>Unforgettable Kids' Parties</h1>
+            <p>From painting vintage VW Beetles to mesmerizing Magic Shows.</p>
+            <a href="#contact" class="cta-button">Book Now</a>
+        </div>
+    </header>
+
+    <section id="services" class="container">
+        <h2 class="section-title hidden">What We Do</h2>
+        <div class="cards-grid">
+            
+            <div class="card hidden">
+                <div class="card-image" style="background-color: #ffeb3b;">
+                    <span>🎨</span>
+                </div>
+                <h3>Beetle Painting</h3>
+                <p>We bring a real VW Beetle to your hotel or venue. The kids get to paint it with washable, safe paints. A creative explosion!</p>
+            </div>
+
+            <div class="card hidden">
+                <div class="card-image" style="background-color: #9c27b0;">
+                     <span>✨</span>
+                </div>
+                <h3>Magic Shows</h3>
+                <p>Interactive magic shows designed specifically for children. Wonder, laughter, and audience participation guaranteed.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="hidden">
+            <h2>Ready to party?</h2>
+            <p>Contact us to check availability for your hotel or private event.</p>
+            <a href="mailto:info@example.com" class="cta-button">Email Us</a>
+            <br><br>
+            <p><small>&copy; 2024 MagicalEvents Entertainment</small></p>
+        </div>
+    </footer>
+
+    <script>
+        // This simple script handles the "fade in" animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+    </script>
+
+</body>
+</html>
