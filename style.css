@@ -57,6 +57,7 @@ body {
     align-items: center;
     text-align: center;
     padding: 0 20px;
+    margin-top: 60px; /* Prevent nav overlap */
 }
 
 .hero h1 {
@@ -74,7 +75,7 @@ body {
 
 /* Services */
 .container {
-    padding: 100px 5%;
+    padding: 80px 5%;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -102,6 +103,7 @@ body {
     transition: transform 0.3s ease;
 }
 
+/* Hover Effect: Card lifts up */
 .card:hover {
     transform: translateY(-10px);
 }
@@ -115,6 +117,33 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 3rem;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    aspect-ratio: 1 / 1; /* Keeps images square */
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+/* Hover Effect: Image zooms in */
+.gallery-item img:hover {
+    transform: scale(1.1);
 }
 
 /* Footer */
@@ -146,41 +175,20 @@ footer {
     .nav-links { display: none; }
 }
 
-/* Animations */
-.hidden {
-    opacity: 0;
-    filter: blur(5px);
-    transform: translateX(-50%);
-    transition: all 1s;
+/* SAFE ANIMATIONS (CSS Only) */
+/* This defines the animation: Start invisible and low, move up and appear */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.show {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateX(0);
-}
-
-/* --- NEW GALLERY STYLES --- */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.gallery-item {
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease;
-}
-
-.gallery-item img:hover {
-    transform: scale(1.1);
+/* Apply the animation to the hero content */
+.fade-in-up {
+    animation: fadeInUp 1.5s ease-out forwards;
 }
