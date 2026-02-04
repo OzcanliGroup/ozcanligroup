@@ -103,20 +103,19 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* Hover Effect: Card lifts up */
 .card:hover {
     transform: translateY(-10px);
 }
 
-.card-image {
-    height: 200px;
-    background-color: #ddd;
-    border-radius: 10px;
-    margin-bottom: 20px;
+.card-icon {
+    height: 150px;
+    width: 150px;
+    margin: 0 auto 20px auto; /* Centers the circle */
+    border-radius: 50%; /* Makes it a circle */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 4rem;
 }
 
 /* Gallery Grid */
@@ -133,6 +132,24 @@ body {
     aspect-ratio: 1 / 1; /* Keeps images square */
 }
 
+/* --- NEW: CSS-ONLY PLACEHOLDERS --- */
+.placeholder-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    transition: transform 0.4s ease;
+}
+
+.placeholder-img:hover {
+    transform: scale(1.1);
+}
+
+/* When you eventually use real images, this style handles them */
 .gallery-item img {
     width: 100%;
     height: 100%;
@@ -141,7 +158,6 @@ body {
     transition: transform 0.4s ease;
 }
 
-/* Hover Effect: Image zooms in */
 .gallery-item img:hover {
     transform: scale(1.1);
 }
@@ -175,8 +191,7 @@ footer {
     .nav-links { display: none; }
 }
 
-/* SAFE ANIMATIONS (CSS Only) */
-/* This defines the animation: Start invisible and low, move up and appear */
+/* ANIMATIONS */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -188,7 +203,6 @@ footer {
     }
 }
 
-/* Apply the animation to the hero content */
 .fade-in-up {
     animation: fadeInUp 1.5s ease-out forwards;
 }
