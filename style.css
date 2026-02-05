@@ -285,3 +285,37 @@ footer {
     .cat-header h2 { font-size: 1.8rem; }
     .footer-content { flex-direction: column; gap: 20px; }
 }
+
+/* --- LIGHTBOX (ENLARGED IMAGE VIEW) --- */
+.lightbox {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999; /* Sit on top of everything */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95); /* Dark background */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; /* Tells user they can click to close */
+}
+
+.lightbox.active {
+    display: flex; /* Show when active */
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border: 2px solid white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    cursor: default; /* Don't show pointer on the image itself */
+}
+
+/* Add a fade in animation for smoothness */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
