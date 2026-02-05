@@ -286,36 +286,72 @@ footer {
     .footer-content { flex-direction: column; gap: 20px; }
 }
 
-/* --- LIGHTBOX (ENLARGED IMAGE VIEW) --- */
+/* --- ADVANCED LIGHTBOX --- */
 .lightbox {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
-    z-index: 9999; /* Sit on top of everything */
+    z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95); /* Dark background */
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(5px);
     justify-content: center;
     align-items: center;
-    cursor: pointer; /* Tells user they can click to close */
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .lightbox.active {
-    display: flex; /* Show when active */
-    animation: fadeIn 0.3s ease;
+    display: flex;
+    opacity: 1;
+}
+
+/* Container for Image + Buttons */
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .lightbox img {
-    max-width: 90%;
-    max-height: 90%;
-    border: 2px solid white;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    cursor: default; /* Don't show pointer on the image itself */
+    max-width: 100%;
+    max-height: 80vh; /* Leave room for captions/fingers */
+    border: 1px solid #333;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    user-select: none; /* Prevents highlighting when swiping */
 }
 
-/* Add a fade in animation for smoothness */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+/* Navigation Arrows */
+.lb-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 2rem;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s;
+    user-select: none;
+    z-index: 10;
+}
+
+.lb-arrow:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lb-prev { left: -60px; }
+.lb-next { right: -60px; }
+
+/* Mobile adjustments for arrows */
+@media (max-width: 768px) {
+    .lb-prev { left: 10px; background: rgba(0,0,0,0.5); }
+    .lb-next { right: 10px; background: rgba(0,0,0,0.5); }
+    .lightbox img { max-height: 70vh; }
 }
