@@ -26,26 +26,99 @@ const contentConfig = {
     }
 };
 
-// --- 0. CREATE LIGHTBOX (The Enlarge Viewer) ---
-// We create this element dynamically so you don't have to edit HTML
+// --- LIGHTBOX VARIABLES ---
+let currentLbIndex = 0;
+let currentLbImages = []; // Stores the list of images for the active category
+
+// --- 0. CREATE LIGHTBOX DOM ---
 const lightbox = document.createElement('div');
 lightbox.id = 'lightbox';
 lightbox.classList.add('lightbox');
+lightbox.innerHTML = `
+    <div class="lightbox-content">
+        <span class="lb-arrow lb-prev" id="lb-prev">&#10094;</span>
+        <img id="lb-img" src="" alt="">
+        <span class="lb-arrow lb-next" id="lb-next">&#10095;</span>
+    </div>
+`;
 document.body.appendChild(lightbox);
 
-// Click lightbox background to close it
-lightbox.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-    lightbox.innerHTML = ''; // Clear content
-});
+const lbImg = document.getElementById('lb-img');
 
-function openLightbox(imgSrc) {
-    lightbox.innerHTML = `<img src="${imgSrc}" alt="Enlarged View">`;
+// --- LIGHTBOX LOGIC ---
+
+// 1. Open Function
+function openLightbox(index, imageList) {
+    currentLbIndex = index;
+    currentLbImages = imageList;
+    updateLightboxImage();
     lightbox.classList.add('active');
 }
 
+// 2. Close Function (Only closes if you click the background, NOT the image)
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+        lightbox.classList.remove('active');
+    }
+});
 
-// --- 1. BUILD THE HERO SLIDESHOW ---
+// 3. Navigation Functions
+function showNext() {
+    currentLbIndex = (currentLbIndex + 1) % currentLbImages.length;
+    updateLightboxImage();
+}
+
+function showPrev() {
+    currentLbIndex = (currentLbIndex - 1 + currentLbImages.length) % currentLbImages.length;
+    updateLightboxImage();
+}
+
+function updateLightboxImage() {
+    lbImg.src = currentLbImages[currentLbIndex];
+}
+
+// 4. Event Listeners for Nav
+document.getElementById('lb-next').addEventListener('click', (e) => {
+    e.stopPropagation(); // Don't close box
+    showNext();
+});
+
+document.getElementById('lb-prev').addEventListener('click', (e) => {
+    e.stopPropagation(); // Don't close box
+    showPrev();
+});
+
+// 5. Keyboard Navigation
+document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'ArrowRight') showNext();
+    if (e.key === 'ArrowLeft') showPrev();
+    if (e.key === 'Escape') lightbox.classList.remove('active');
+});
+
+// 6. SWIPE FUNCTIONALITY (Mobile)
+let touchStartX = 0;
+let touchEndX = 0;
+
+lightbox.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+lightbox.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const threshold = 50; // Minimum distance to count as swipe
+    if (touchEndX < touchStartX - threshold) showNext(); // Swiped Left
+    if (touchEndX > touchStartX + threshold) showPrev(); // Swiped Right
+}
+
+
+// --- MAIN SITE LOGIC ---
+
+// 1. BUILD HERO SLIDESHOW
 const slideshowContainer = document.getElementById('hero-slideshow');
 const slideImages = [];
 
@@ -74,27 +147,31 @@ if(slides.length > 0) {
 }
 
 
-// --- 2. BUILD THE CATEGORY BOXES ---
+// 2. BUILD CATEGORY BOXES
 const categoryContainer = document.getElementById('category-container');
 
 Object.values(contentConfig).forEach((cat, index) => {
     
-    // Create the Main Box
+    // Collect all images for this category upfront for the lightbox
+    const categoryImages = [];
+    for(let i=1; i<=cat.imgCount; i++) {
+        let num = i.toString().padStart(2, '0');
+        categoryImages.push(`images/${cat.prefix}_img${num}.jpg`);
+    }
+
+    // Create Main Box
     const box = document.createElement('div');
     box.classList.add('category-box');
     box.id = `cat-${index}`;
 
-    // Background Image
     const bg = document.createElement('div');
     bg.classList.add('cat-bg');
-    bg.style.backgroundImage = `url('images/${cat.prefix}_img01.jpg')`;
+    bg.style.backgroundImage = `url('${categoryImages[0]}')`; // Use first image as cover
 
-    // Title Header
     const header = document.createElement('div');
     header.classList.add('cat-header');
     header.innerHTML = `<h2>${cat.title}</h2>`;
 
-    // Hidden Gallery Container
     const gallery = document.createElement('div');
     gallery.classList.add('cat-gallery');
     const mediaGrid = document.createElement('div');
@@ -106,56 +183,48 @@ Object.values(contentConfig).forEach((cat, index) => {
         const item = document.createElement('div');
         item.classList.add('media-item');
         
-        // Videos need to NOT close the drawer when clicked
         const vid = document.createElement('video');
         vid.controls = true;
         vid.innerHTML = `<source src="images/${cat.prefix}_vid${num}.mp4" type="video/mp4">`;
         
-        // FIX: Stop propagation so drawer doesn't close on video click
-        vid.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
+        // Videos just play, they don't open lightbox
+        vid.addEventListener('click', (e) => e.stopPropagation());
 
         item.appendChild(vid);
         mediaGrid.appendChild(item);
     }
 
     // 2b. Inject Images
-    for(let i=1; i<=cat.imgCount; i++) {
-        let num = i.toString().padStart(2, '0');
-        const imgPath = `images/${cat.prefix}_img${num}.jpg`;
-        
+    categoryImages.forEach((imgSrc, imgIndex) => {
         const item = document.createElement('div');
         item.classList.add('media-item');
         
         const img = document.createElement('img');
-        img.src = imgPath;
+        img.src = imgSrc;
         img.alt = cat.title;
 
-        // FIX: Add Click Event to Open Lightbox & Stop Drawer Closing
+        // Click opens lightbox at correct index
         img.addEventListener('click', function(e) {
-            e.stopPropagation(); // <--- This stops the drawer from closing!
-            openLightbox(imgPath); // <--- This opens the large image!
+            e.stopPropagation(); 
+            openLightbox(imgIndex, categoryImages); 
         });
 
         item.appendChild(img);
         mediaGrid.appendChild(item);
-    }
+    });
 
-    // Assemble the Box
+    // Assemble Box
     gallery.appendChild(mediaGrid);
     box.appendChild(bg);
     box.appendChild(header);
     box.appendChild(gallery);
     categoryContainer.appendChild(box);
 
-    // Add Click Event to Expand/Collapse Drawer
+    // Expand/Collapse Logic
     box.addEventListener('click', function() {
-        // Close other boxes (optional - slicker feel)
         document.querySelectorAll('.category-box').forEach(b => {
             if(b !== this) b.classList.remove('open');
         });
-        
         this.classList.toggle('open');
     });
 });
