@@ -170,7 +170,11 @@ Object.values(contentConfig).forEach((cat, index) => {
 
     const header = document.createElement('div');
     header.classList.add('cat-header');
-    header.innerHTML = `<h2>${cat.title}</h2>`;
+    // Added the Arrow Span below
+    header.innerHTML = `
+        <h2>${cat.title}</h2>
+        <span class="cat-arrow">▼</span>
+    `;
 
     const gallery = document.createElement('div');
     gallery.classList.add('cat-gallery');
