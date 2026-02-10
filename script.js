@@ -3,7 +3,7 @@ const contentConfig = {
     magic: {
         title: "Magic Shows",
         prefix: "magic",
-        imgCount: 2, 
+        imgCount: 1, 
         vidCount: 1  
     },
     car: {
@@ -112,13 +112,13 @@ function handleSwipe() {
 
 // --- MAIN SITE LOGIC ---
 
-// 1. BUILD HERO SLIDESHOW
+// 1. BUILD HERO SLIDESHOW (UPDATED: ONLY 1 IMAGE PER CATEGORY)
 const slideshowContainer = document.getElementById('hero-slideshow');
 const slideImages = [];
 
 Object.values(contentConfig).forEach(cat => {
+    // Only grab the first image (img01)
     if(cat.imgCount >= 1) slideImages.push(`images/${cat.prefix}_img01.jpg`);
-    if(cat.imgCount >= 2) slideImages.push(`images/${cat.prefix}_img02.jpg`);
 });
 
 slideImages.forEach((src, index) => {
