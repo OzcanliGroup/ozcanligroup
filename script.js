@@ -28,7 +28,7 @@ const contentConfig = {
 
 // --- LIGHTBOX VARIABLES ---
 let currentLbIndex = 0;
-let currentLbImages = []; // Stores the list of images for the active category
+let currentLbImages = []; 
 
 // --- 0. CREATE LIGHTBOX DOM ---
 const lightbox = document.createElement('div');
@@ -46,8 +46,6 @@ document.body.appendChild(lightbox);
 const lbImg = document.getElementById('lb-img');
 
 // --- LIGHTBOX LOGIC ---
-
-// 1. Open Function
 function openLightbox(index, imageList) {
     currentLbIndex = index;
     currentLbImages = imageList;
@@ -55,14 +53,12 @@ function openLightbox(index, imageList) {
     lightbox.classList.add('active');
 }
 
-// 2. Close Function (Only closes if you click the background, NOT the image)
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
         lightbox.classList.remove('active');
     }
 });
 
-// 3. Navigation Functions
 function showNext() {
     currentLbIndex = (currentLbIndex + 1) % currentLbImages.length;
     updateLightboxImage();
@@ -77,18 +73,16 @@ function updateLightboxImage() {
     lbImg.src = currentLbImages[currentLbIndex];
 }
 
-// 4. Event Listeners for Nav
 document.getElementById('lb-next').addEventListener('click', (e) => {
-    e.stopPropagation(); // Don't close box
+    e.stopPropagation(); 
     showNext();
 });
 
 document.getElementById('lb-prev').addEventListener('click', (e) => {
-    e.stopPropagation(); // Don't close box
+    e.stopPropagation(); 
     showPrev();
 });
 
-// 5. Keyboard Navigation
 document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('active')) return;
     if (e.key === 'ArrowRight') showNext();
@@ -96,7 +90,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') lightbox.classList.remove('active');
 });
 
-// 6. SWIPE FUNCTIONALITY (Mobile)
+// SWIPE FUNCTIONALITY
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -110,9 +104,9 @@ lightbox.addEventListener('touchend', e => {
 });
 
 function handleSwipe() {
-    const threshold = 50; // Minimum distance to count as swipe
-    if (touchEndX < touchStartX - threshold) showNext(); // Swiped Left
-    if (touchEndX > touchStartX + threshold) showPrev(); // Swiped Right
+    const threshold = 50; 
+    if (touchEndX < touchStartX - threshold) showNext(); 
+    if (touchEndX > touchStartX + threshold) showPrev(); 
 }
 
 
@@ -152,7 +146,7 @@ const categoryContainer = document.getElementById('category-container');
 
 Object.values(contentConfig).forEach((cat, index) => {
     
-    // Collect all images for this category upfront for the lightbox
+    // Collect images for lightbox
     const categoryImages = [];
     for(let i=1; i<=cat.imgCount; i++) {
         let num = i.toString().padStart(2, '0');
@@ -166,11 +160,11 @@ Object.values(contentConfig).forEach((cat, index) => {
 
     const bg = document.createElement('div');
     bg.classList.add('cat-bg');
-    bg.style.backgroundImage = `url('${categoryImages[0]}')`; // Use first image as cover
+    bg.style.backgroundImage = `url('${categoryImages[0]}')`; 
 
+    // Header with Arrow
     const header = document.createElement('div');
     header.classList.add('cat-header');
-    // Added the Arrow Span below
     header.innerHTML = `
         <h2>${cat.title}</h2>
         <span class="cat-arrow">▼</span>
@@ -191,7 +185,6 @@ Object.values(contentConfig).forEach((cat, index) => {
         vid.controls = true;
         vid.innerHTML = `<source src="images/${cat.prefix}_vid${num}.mp4" type="video/mp4">`;
         
-        // Videos just play, they don't open lightbox
         vid.addEventListener('click', (e) => e.stopPropagation());
 
         item.appendChild(vid);
@@ -207,7 +200,6 @@ Object.values(contentConfig).forEach((cat, index) => {
         img.src = imgSrc;
         img.alt = cat.title;
 
-        // Click opens lightbox at correct index
         img.addEventListener('click', function(e) {
             e.stopPropagation(); 
             openLightbox(imgIndex, categoryImages); 
@@ -217,7 +209,6 @@ Object.values(contentConfig).forEach((cat, index) => {
         mediaGrid.appendChild(item);
     });
 
-    // Assemble Box
     gallery.appendChild(mediaGrid);
     box.appendChild(bg);
     box.appendChild(header);
@@ -231,4 +222,28 @@ Object.values(contentConfig).forEach((cat, index) => {
         });
         this.classList.toggle('open');
     });
+});
+
+// --- PARTNERSHIP MODAL LOGIC ---
+const partnerBtn = document.getElementById('partnerBtn');
+const contactModal = document.getElementById('contact-modal');
+const closeModal = document.querySelector('.close-modal');
+
+if(partnerBtn) {
+    partnerBtn.addEventListener('click', (e) => {
+        e.preventDefault(); 
+        contactModal.classList.add('active');
+    });
+}
+
+if(closeModal) {
+    closeModal.addEventListener('click', () => {
+        contactModal.classList.remove('active');
+    });
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === contactModal) {
+        contactModal.classList.remove('active');
+    }
 });
