@@ -3,26 +3,26 @@ const contentConfig = {
     magic: {
         title: "Magic Shows",
         prefix: "magic",
-        imgCount: 3, 
+        imgCount: 2, 
         vidCount: 1  
     },
     car: {
         title: "Beetle Painting",
         prefix: "car",
-        imgCount: 3,
-        vidCount: 0
+        imgCount: 4,
+        vidCount: 2
     },
     vr: {
         title: "VR & Planetarium",
         prefix: "VR",
         imgCount: 2,
-        vidCount: 0
+        vidCount: 1
     },
     workshop: {
         title: "Creative Workshops",
         prefix: "wshop",
         imgCount: 2,
-        vidCount: 0
+        vidCount: 5
     }
 };
 
