@@ -7,7 +7,7 @@ const contentConfig = {
         vidCount: 1  
     },
     car: {
-        title: "Beetle Painting",
+        title: "Car Painting",
         prefix: "car",
         imgCount: 4,
         vidCount: 2
