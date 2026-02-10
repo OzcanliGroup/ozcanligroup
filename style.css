@@ -17,8 +17,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 5%;
-    background: rgba(10, 10, 10, 0.9);
+    padding: 1rem 5%;
+    background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
@@ -28,7 +28,7 @@ body {
 }
 
 .logo {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 2px;
     color: #fff;
@@ -38,13 +38,13 @@ body {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 30px;
+    gap: 25px;
 }
 
 .nav-links a {
     text-decoration: none;
     color: #aaa;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: color 0.3s;
@@ -62,7 +62,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    margin-bottom: 50px; /* Space before categories start */
+    margin-bottom: 60px;
 }
 
 .slideshow-container {
@@ -97,7 +97,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
     z-index: 2;
 }
 
@@ -110,21 +110,22 @@ body {
 }
 
 .hero-content h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: 300;
     letter-spacing: -1px;
     margin-bottom: 20px;
+    line-height: 1.2;
 }
 
 .hero-content p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #ccc;
     margin-bottom: 40px;
     font-weight: 300;
 }
 
 .cta-button {
-    padding: 15px 40px;
+    padding: 12px 35px;
     border: 1px solid #fff;
     color: #fff;
     text-decoration: none;
@@ -139,27 +140,32 @@ body {
     color: #000;
 }
 
-/* CATEGORIES (Pill Style) */
+/* CATEGORIES (Pill Style - Fixed Height) */
+.categories-section {
+    padding-bottom: 80px;
+}
+
 .category-grid {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 0 5%; /* Indent the grid */
+    padding: 0 5%;
     gap: 20px; /* Space between pills */
 }
 
 .category-box {
     position: relative;
     width: 100%;
-    min-height: 250px; /* Fixed height for closed state */
-    border-radius: 30px; /* PILL SHAPE ROUNDING */
-    overflow: hidden; /* Clips content to the round corners */
+    /* FIXED: Reduced height to make them look like sleek pills */
+    min-height: 120px; 
+    border-radius: 60px; /* Highly rounded corners */
+    overflow: hidden;
     cursor: pointer;
-    border: 1px solid #333; /* Subtle border */
+    border: 1px solid #333;
     transition: all 0.5s ease;
 }
 
-/* The Background Image */
+/* Background Image inside pill */
 .cat-bg {
     position: absolute;
     top: 0;
@@ -168,16 +174,197 @@ body {
     height: 100%;
     background-size: cover;
     background-position: center;
-    filter: grayscale(100%) brightness(0.5);
+    filter: grayscale(100%) brightness(0.4);
     transition: all 0.5s ease;
     z-index: 1;
 }
 
 .category-box:hover .cat-bg {
-    filter: grayscale(0%) brightness(0.7);
+    filter: grayscale(0%) brightness(0.6);
 }
 
-/* The Title Header & Arrow */
+/* Header Text & Arrow */
 .cat-header {
     position: relative;
     z-index: 2;
+    /* FIXED: Matches the min-height */
+    height: 120px; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px; /* Indent text */
+}
+
+.cat-header h2 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    pointer-events: none;
+    margin: 0;
+}
+
+.cat-arrow {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: transform 0.4s ease;
+}
+
+/* Open State */
+.category-box.open {
+    cursor: default;
+    border-color: #555;
+    border-radius: 30px; /* Less rounded when open */
+}
+
+.category-box.open .cat-arrow {
+    transform: rotate(180deg);
+}
+
+.cat-gallery {
+    max-height: 0;
+    overflow: hidden;
+    background: #111;
+    position: relative;
+    z-index: 3;
+    transition: max-height 0.8s ease-in-out;
+    padding: 0 5%;
+}
+
+.category-box.open .cat-gallery {
+    max-height: 2000px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+/* Media Grid */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.media-item img, .media-item video {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.media-item:hover img {
+    transform: scale(1.03);
+}
+
+/* REFERENCES / TRUSTED BY */
+.references-section {
+    padding: 80px 5%;
+    background: #0a0a0a;
+    text-align: center;
+    border-top: 1px solid #222;
+}
+
+.references-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.partners-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Important for wrapping */
+    gap: 30px;
+}
+
+.partner-logo {
+    font-size: 1.1rem;
+    color: #aaa;
+    border: 1px solid #333;
+    padding: 15px 30px;
+    min-width: 150px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.partner-logo:hover {
+    border-color: #666;
+    color: #fff;
+    background: #111;
+}
+
+/* FOOTER */
+footer {
+    border-top: 1px solid #222;
+    padding: 60px 5%;
+    font-size: 0.9rem;
+    color: #555;
+    background: #050505;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-info h3 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.footer-info p {
+    margin-bottom: 10px;
+}
+
+.footer-info a {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+    padding-bottom: 2px;
+}
+
+/* LIGHTBOX */
+.lightbox {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox img {
+    max-width: 100%;
+    max-height: 80vh;
+    border: 1px solid #333;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    user-select: none;
+}
+
+.lb-arrow
