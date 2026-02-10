@@ -271,43 +271,49 @@ body {
     letter-spacing: 4px;
 }
 
+/* --- NEW GRID SYSTEM FOR LOGOS --- */
 .partners-grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 Columns for Web */
     gap: 30px;
+    max-width: 900px; /* Keeps them from getting too wide */
+    margin: 0 auto; /* Centers the grid */
 }
 
-/* The White Tile for Logos */
+/* The White Tile for Logos with Vignette */
 .partner-logo {
-    width: 180px;      
-    height: 100px;     
-    background: #fff;  /* White background */
+    /* Replaced fixed w/h with aspect ratio for responsiveness */
+    aspect-ratio: 3 / 2; 
+    background: #fff;
     border-radius: 15px;
     display: flex;     
     justify-content: center;
     align-items: center;
-    padding: 15px;     
+    padding: 20px;     
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: default;
+    overflow: hidden;
+    /* VIGNETTE EFFECT: Inner shadow softens the bright white edges */
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.15);
 }
 
 .partner-logo:hover {
     transform: translateY(-5px); 
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    /* Combine vignette with outer glow on hover */
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.15), 0 10px 25px rgba(255, 255, 255, 0.1);
 }
 
 .partner-logo img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain; 
-    filter: grayscale(100%); /* Start B&W */
-    opacity: 0.7;
+    filter: grayscale(100%);
+    opacity: 0.8;
     transition: all 0.3s ease;
 }
 
 .partner-logo:hover img {
-    filter: grayscale(0%); /* Color on Hover */
+    filter: grayscale(0%);
     opacity: 1;
 }
 
@@ -494,6 +500,13 @@ footer {
     .cat-header h2 { font-size: 1.4rem; }
     .category-box { min-height: 100px; border-radius: 50px; }
     .cat-header { height: 100px; }
+    
+    /* --- NEW MOBILE GRID FOR LOGOS --- */
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 Columns for Mobile */
+        gap: 20px;
+    }
+
     .footer-content { flex-direction: column; }
     .lb-prev { left: 10px; background: rgba(0,0,0,0.6); }
     .lb-next { right: 10px; background: rgba(0,0,0,0.6); }
