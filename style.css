@@ -157,8 +157,8 @@ body {
 .category-box {
     position: relative;
     width: 100%;
-    min-height: 120px; /* Sleek Pill Height */
-    border-radius: 60px; /* Pill Shape */
+    min-height: 120px;
+    border-radius: 60px;
     overflow: hidden;
     cursor: pointer;
     border: 1px solid #333;
@@ -212,7 +212,7 @@ body {
 .category-box.open {
     cursor: default;
     border-color: #555;
-    border-radius: 30px; /* Less rounded when expanded */
+    border-radius: 30px;
 }
 
 .category-box.open .cat-arrow {
@@ -255,7 +255,7 @@ body {
     transform: scale(1.03);
 }
 
-/* REFERENCES / TRUSTED BY (Text Version) */
+/* REFERENCES / TRUSTED BY (Logo Version) */
 .references-section {
     padding: 80px 5%;
     background: #0a0a0a;
@@ -265,10 +265,10 @@ body {
 
 .references-section h2 {
     font-size: 1.5rem;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     color: #666;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
 }
 
 .partners-grid {
@@ -278,25 +278,37 @@ body {
     gap: 30px;
 }
 
+/* The White Tile for Logos */
 .partner-logo {
-    display: flex;
+    width: 180px;      
+    height: 100px;     
+    background: #fff;  /* White background */
+    border-radius: 15px;
+    display: flex;     
     justify-content: center;
     align-items: center;
-    font-size: 1.1rem;
-    color: #aaa;
-    border: 1px solid #333;
-    padding: 20px 40px;
-    min-width: 200px;
-    border-radius: 10px;
-    transition: all 0.3s;
+    padding: 15px;     
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: default;
 }
 
 .partner-logo:hover {
-    border-color: #666;
-    color: #fff;
-    background: #111;
-    transform: translateY(-5px);
+    transform: translateY(-5px); 
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+.partner-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; 
+    filter: grayscale(100%); /* Start B&W */
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.partner-logo:hover img {
+    filter: grayscale(0%); /* Color on Hover */
+    opacity: 1;
 }
 
 /* FOOTER */
